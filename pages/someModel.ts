@@ -1,0 +1,28 @@
+import { createStore, createEvent, createEffect, sample } from 'effector';
+
+export const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+
+const someEffect = createEffect(() => true)
+
+export type Authenticated = 'anonymous' | 'pending' | 'authenticated'
+
+export const $sessionStatus = createStore('anonymous')
+
+export const bootAppOnClient = createEvent()
+
+sample({
+  clock: bootAppOnClient,
+  target: someEffect
+})
+
+sample({
+  clock: someEffect.pending,
+  fn: () => 'pending',
+  target: $sessionStatus
+})
+
+sample({
+  clock: someEffect.done,
+  fn: () => 'authenticated',
+  target: $sessionStatus,
+})
