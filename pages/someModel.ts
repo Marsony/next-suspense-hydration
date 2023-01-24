@@ -1,7 +1,5 @@
 import { createStore, createEvent, createEffect, sample } from 'effector';
 
-export const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
-
 const someEffect = createEffect(() => true)
 
 export type Authenticated = 'anonymous' | 'pending' | 'authenticated'
